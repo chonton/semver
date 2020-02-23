@@ -1,11 +1,11 @@
 /**
- * Apache 2.0 Licensed.  See the LICENSE file distributed with this work for additional information
+ * Apache 2.0 Licensed. See the LICENSE file distributed with this work for additional information
  * regarding copyright ownership. You may obtain a copy of the License at
  *
- * http://www.apache.org/licenses/LICENSE-2.0
+ * <p>http://www.apache.org/licenses/LICENSE-2.0
  *
- * Software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
- * CONDITIONS OF ANY KIND, either express or implied.
+ * <p>Software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES
+ * OR CONDITIONS OF ANY KIND, either express or implied.
  */
 package org.honton.chas.version;
 
@@ -22,15 +22,14 @@ import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * Information about the jars in this process.
- * The constructor's ClassLoader parameter is the ClassLoader that will be queried for MANIFEST.MF files.
+ * Information about the jars in this process. The constructor's ClassLoader parameter is the
+ * ClassLoader that will be queried for MANIFEST.MF files.
  */
 @Slf4j
 @RequiredArgsConstructor
 public class JarVersions {
 
-  @Getter
-  private final Map<String, String> dependentJars;
+  @Getter private final Map<String, String> dependentJars;
 
   public JarVersions(ClassLoader classLoader) {
     dependentJars = extractAllJars(classLoader);
@@ -40,7 +39,8 @@ public class JarVersions {
    * Remove the principal jar from the list of dependentJars.
    *
    * @param mainClass The principal class which is contained in the principal jar.
-   * @return The semantic version of the principal class.  This may be null if the jar cannot be found.
+   * @return The semantic version of the principal class. This may be null if the jar cannot be
+   *     found.
    */
   public SemVer removePrincipal(Class mainClass) {
     String location = getLocation(mainClass);
@@ -52,7 +52,7 @@ public class JarVersions {
     Map<String, String> versions = new TreeMap<>();
     try {
       for (Enumeration<URL> jarLocations = classLoader.getResources("META-INF/MANIFEST.MF");
-        jarLocations.hasMoreElements(); ) {
+          jarLocations.hasMoreElements(); ) {
         URI jarLocation = toURI(jarLocations.nextElement());
         extractJarVersion(versions, jarLocation);
       }

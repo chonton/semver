@@ -1,19 +1,18 @@
 /**
- * Apache 2.0 Licensed.  See the LICENSE file distributed with this work for additional information
+ * Apache 2.0 Licensed. See the LICENSE file distributed with this work for additional information
  * regarding copyright ownership. You may obtain a copy of the License at
  *
- *   http://www.apache.org/licenses/LICENSE-2.0
+ * <p>http://www.apache.org/licenses/LICENSE-2.0
  *
- * Software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
- * CONDITIONS OF ANY KIND, either express or implied.
+ * <p>Software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES
+ * OR CONDITIONS OF ANY KIND, either express or implied.
  */
 package org.honton.chas.version;
 
-import org.junit.Assert;
-import org.junit.Test;
-
 import java.util.Arrays;
 import java.util.Collections;
+import org.junit.Assert;
+import org.junit.Test;
 
 public class SemVerTest {
 
@@ -23,7 +22,8 @@ public class SemVerTest {
     Assert.assertFalse(SemVer.valueOf("1.0.0").isSupported(SemVer.valueOf("2.0.0")));
   }
 
-  private static void assertSemVerAttributes(SemVer semVer, int major, int minor, int patch, String preRelease, String metaData) {
+  private static void assertSemVerAttributes(
+      SemVer semVer, int major, int minor, int patch, String preRelease, String metaData) {
     Assert.assertEquals(major, semVer.getMajor());
     Assert.assertEquals(minor, semVer.getMinor());
     Assert.assertEquals(patch, semVer.getPatch());
@@ -50,7 +50,8 @@ public class SemVerTest {
   @Test
   public void ignoreMeta() {
     Assert.assertTrue(SemVer.valueOf("2.0.0+other").isSupported(SemVer.valueOf("2.0.0+metadata")));
-    Assert.assertTrue(SemVer.valueOf("2.0.0-alpha+other").isSupported(SemVer.valueOf("2.0.0-alpha+metadata")));
+    Assert.assertTrue(
+        SemVer.valueOf("2.0.0-alpha+other").isSupported(SemVer.valueOf("2.0.0-alpha+metadata")));
   }
 
   @Test
@@ -97,23 +98,29 @@ public class SemVerTest {
 
   @Test
   public void failSingle() {
-    Assert.assertNull(SemVer.valueOf("1.11.0").findSupported(Collections.singletonList(SemVer.valueOf("2.3.1"))));
+    Assert.assertNull(
+        SemVer.valueOf("1.11.0").findSupported(Collections.singletonList(SemVer.valueOf("2.3.1"))));
   }
 
   @Test
   public void failDual() {
-    Assert.assertNull(SemVer.valueOf("3.3.1").findSupported(Arrays.asList(SemVer.valueOf("1.11.0"), SemVer.valueOf("2.0.0"))));
+    Assert.assertNull(
+        SemVer.valueOf("3.3.1")
+            .findSupported(Arrays.asList(SemVer.valueOf("1.11.0"), SemVer.valueOf("2.0.0"))));
   }
 
   @Test
   public void passSingle() {
     SemVer expected = SemVer.valueOf("2.3.1");
-    Assert.assertEquals(expected, SemVer.valueOf("2.3.2").findSupported(Collections.singletonList(expected)));
+    Assert.assertEquals(
+        expected, SemVer.valueOf("2.3.2").findSupported(Collections.singletonList(expected)));
   }
 
   @Test
   public void passDual() {
     SemVer expected = SemVer.valueOf("2.0.0");
-    Assert.assertEquals(expected, SemVer.valueOf("2.1.0").findSupported(Arrays.asList(SemVer.valueOf("1.11.0"), expected)));
+    Assert.assertEquals(
+        expected,
+        SemVer.valueOf("2.1.0").findSupported(Arrays.asList(SemVer.valueOf("1.11.0"), expected)));
   }
 }
